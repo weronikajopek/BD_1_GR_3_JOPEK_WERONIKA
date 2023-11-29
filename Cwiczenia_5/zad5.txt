@@ -1,0 +1,43 @@
+ZADANIE 1
+
+CREATE TABLE zad5.zamowienia (
+    id_produktu INT PRIMARY KEY,
+    nazwa_produktu VARCHAR(100) NOT NULL,
+    id_klienta INT NOT NULL,
+    nazwa_klienta VARCHAR(100) NOT NULL,
+    data_zamowniea DATE NOT NULL,
+    cena_produktu DECIMAL(10,2) NOT NULL,
+    ilość INT NOT NULL,
+    VAT decimal(5,2) NOT NULL,
+    suma_brutto DECIMAL(10,2) NOT NULL,
+    suma_netto DECIMAL(10,2) NOT NULL
+);
+
+ALTER TABLE zad5.zamowienia ADD CONSTRAINT uk_nazwa_produktu UNIQUE (nazwa_produktu);
+ALTER TABLE zad5.zamowienia ADD CONSTRAINT uk_nazwa_klienta UNIQUE (nazwa_klienta);
+
+Klucze kandydujące:
+1.{id_produktu, id_klienta, data_zamowienia}
+2.{nazwa_produktu, id_klienta, data_zamowienia}
+3.{id_produktu, nazwa_klienta, data_zamowienia}
+
+————————————————————————————————————————————————————————————————————
+ZADANIE 2
+
+CREATE TABLE zad5.pomieszczenia (
+    id_pomieszczenia INT IDENTITY(1,1) PRIMARY KEY,
+    numer_pomieszczenia INT NOT NULL,
+    id_budynku INT NOT NULL,
+    powierzchnia DECIMAL(10,2) NOT NULL,
+    liczba_okien INT NOT NULL,
+    liczba_drzwi INT NOT NULL,
+    ulica VARCHAR(50) NOT NULL,
+    miasto VARCHAR(100) NOT NULL,
+    kod_pocztowy VARCHAR(20) NOT NULL,
+    UNIQUE (id_budynku, numer_pomieszczenia)
+);
+
+Klucze kandydujące:
+1.{id_pomieszczenia}
+2.{numer_pomieszczenia}
+3.{id_budynku, numer_pomieszczenia}
