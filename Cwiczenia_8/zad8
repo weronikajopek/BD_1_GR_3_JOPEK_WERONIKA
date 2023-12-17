@@ -1,0 +1,51 @@
+--zadanie 1
+
+WITH  cte_maxsalary AS (
+    SELECT 
+    humanresources.employee.businessentityid AS id,
+    person.person.firstname, 
+    person.person.lastname, 
+    MAX(humanresources.employeepayhistory.rate) AS max_salary
+    FROM humanresources.employee
+    INNER JOIN
+        person.person ON humanresources.employee.businessentityid = person.person.businessentityid
+    INNER JOIN
+        humanresources.employeepayhistory ON humanresources.employee.businessentityid = humanresources.employeepayhistory.businessentityid
+    GROUP BY
+        humanresources.employee.businessentityid, person.person.firstname, person.person.lastname
+)
+
+SELECT 
+cte_maxsalary.id,
+cte_maxsalary.firstname,
+cte_maxsalary.lastname,
+cte_maxsalary.max_salary
+INTO TempEmpoloyeeInfo
+FROM cte_maxsalary
+-- wybieramy MAX spośród MAX dla każdego pracownika
+WHERE cte_maxsalary.max_salary = (SELECT MAX(max_salary) FROM cte_maxsalary);
+
+SELECT * FROM TempEmpoloyeeInfo;
+
+
+--zadanie 2
+
+WITH cte_customerdata AS (
+    SELECT
+    sales.customer.customerid,
+    sales.customer.territoryid,
+    person.person.firstname,
+    person.person.lastname
+    FROM sales.customer
+    INNER JOIN person.person ON person.person.businessentityid = sales.customer.personid
+)
+
+SELECT 
+cte_customerdata.customerid,
+cte_customerdata.territoryid,
+cte_customerdata.firstname,
+cte_customerdata.lastname
+INTO TempTable
+FROM cte_customerdata;
+
+SELECT * FROM TempTable;
