@@ -1,0 +1,28 @@
+--a
+
+BEGIN TRANSACTION;
+
+UPDATE production.product
+SET listprice = listprice * 1.10
+WHERE productid = 680;
+
+COMMIT;
+
+
+--b
+
+BEGIN TRANSACTION;
+
+DELETE FROM production.product
+WHERE productid = 707;
+
+ROLLBACK;
+
+
+--c
+BEGIN TRANSACTION;
+
+INSERT INTO production.product (Name, StandardCost, ListPrice, ProductNumber)
+VALUES ('New Product', 100.00, 150.00, 'NP001');
+
+COMMIT;
